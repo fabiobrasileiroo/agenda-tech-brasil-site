@@ -1,0 +1,33 @@
+'use client'
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+interface EventFiltersProps {
+  years: string[]
+  selectedYear: string
+  onYearChange: (year: string) => void
+}
+
+export function EventFilters({
+  years,
+  selectedYear,
+  onYearChange,
+}: EventFiltersProps) {
+  return (
+    <div className="flex justify-center mb-8">
+      <Select value={selectedYear} onValueChange={onYearChange}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Selecione o ano" />
+        </SelectTrigger>
+        <SelectContent>
+          {years.map((year) => (
+            <SelectItem key={year} value={year}>
+              {year}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  )
+}
+
