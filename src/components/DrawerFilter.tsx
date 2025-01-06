@@ -53,7 +53,7 @@ export function DrawerFilter({
           <FilterIcon />
         </Button> */}
         <div  className="fixed z-10 bottom-4 right-4">
-          <RainbowButtonFilter ></RainbowButtonFilter>;
+          <RainbowButtonFilter ></RainbowButtonFilter>
         </div>
       </DrawerTrigger>
       <DrawerContent className="max-w-xs">
@@ -152,5 +152,5 @@ export function DrawerFilter({
         </div>
       </DrawerContent>
     </Drawer>
-  );
+  )
 }
