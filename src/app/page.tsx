@@ -38,7 +38,7 @@ export default function Home() {
     loadEvents()
   }, [])
 
-  const filterEvents = () => {
+  const filterEvents = (eventsData: Evento[], currentYear: string) => {
     const filtered = events.filter((event) => {
       // Filtro por ano
       if (selectedYear && event.ano.toString() !== selectedYear) return false
@@ -61,7 +61,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    filterEvents()
+    // filterEvents()
+    filterEvents(events, selectedYear || new Date().getFullYear().toString());
   }, [selectedYear, location, startDate, endDate, mode, events])
 
   const scrollToCurrentMonth = (currentMonth: string): void => {
@@ -87,7 +88,7 @@ export default function Home() {
 
         {/* Filtros */}
         <DrawerFilter
-        
+
           // month={month}
           years={years}
           selectedYear={selectedYear}
@@ -120,7 +121,11 @@ export default function Home() {
                 <div
                   key={monthData.mes}
                   className="mb-8"
-                  ref={(el) => (monthRefs.current[monthData.mes.toLowerCase()] = el)}
+                  // ref={(el) => (monthRefs.current[monthData.mes.toLowerCase()] = el)}
+                  ref={(el) => {
+                    monthRefs.current[monthData.mes.toLowerCase()] = el;
+                  }}
+
                 >
                   <h3
                     className="text-xl font-semibold mb-8 capitalize"
@@ -130,7 +135,7 @@ export default function Home() {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {monthData.eventos.map((event: Evento2, index: number) => (
-                      <EventCard key={`${event.nome}-${index}`} event={event} month={monthData.mes}/>
+                      <EventCard key={`${event.nome}-${index}`} event={event} month={monthData.mes} />
                     ))}
                   </div>
                 </div>

@@ -98,7 +98,7 @@ export function DrawerFilter({
               /> */}
                <Input type="text" placeholder="Email" value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="Cidade ou estado"
+                // placeholder="Cidade ou estado"
                 className="w-full p-1 text-sm border rounded-md" />
             </div>
 

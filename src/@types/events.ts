@@ -4,6 +4,10 @@ export interface Root {
 }
 
 export interface Evento {
+  modelo: any
+  dataFim: string | number | Date
+  dataInicio: string | number | Date
+  localidade: any
   ano: number
   arquivado: boolean
   meses: Mese[]
