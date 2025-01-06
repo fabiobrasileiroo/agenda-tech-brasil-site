@@ -96,7 +96,7 @@ export function DrawerFilter({
                 placeholder="Cidade ou estado"
                 className="w-full p-1 text-sm border rounded-md"
               /> */}
-               <Input type="text" placeholder="Email" value={location}
+               <Input type="text" placeholder="Digite o local" value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 // placeholder="Cidade ou estado"
                 className="w-full p-1 text-sm border rounded-md" />
