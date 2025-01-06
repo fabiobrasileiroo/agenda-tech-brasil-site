@@ -159,9 +159,9 @@ export default function Home() {
               <h3 className="text-xl font-semibold">Mais Informações</h3>
               <p className="mt-4">
                 Criado por <a href="https://github.com/pachicodes" className="text-primary underline">@pachicodes</a> e mantido por colaboradores como <a href="https://github.com/stephan-lopes" className="text-primary underline">@stephan-lopes </a>
-                e website foi desevolvido pelo
+                e website foi desevolvido pelo 
                 <a href="https://github.com/fabiobrasileiroo" className="text-primary underline">
-                  fabiobrasileiroo
+                   fabiobrasileiroo
                 </a>
               </p>
             </div>
