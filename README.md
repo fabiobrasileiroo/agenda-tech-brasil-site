@@ -1,39 +1,86 @@
+# Agenda Tech Brasil
 
-![%Y-%m%d_](https://github.com/user-attachments/assets/f4dae2fe-b884-4a9f-8dfc-38ac38e57399)
+<!--![Agenda Tech Brasil](https://github.com/user-attachments/assets/f4dae2fe-b884-4a9f-8dfc-38ac38e57399) -->
+![%Y-%m%d_](https://github.com/user-attachments/assets/57767b75-d582-4e3a-87f7-39471c27bb62)
 
-[Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+**Agenda Tech Brasil** é um projeto que lista eventos técnicos em várias áreas da tecnologia, como desenvolvimento, cloud computing, e mais! Este projeto utiliza [Next.js](https://nextjs.org) e dados dinâmicos carregados de um arquivo JSON.
 
-## Getting Started
+## 🚀 Funcionalidades
 
-First, run the development server:
+- Listagem de eventos técnicos com informações detalhadas:
+  - Tipo de evento (presencial ou online)
+  - Localização e data
+- Interface otimizada para navegadores modernos.
+- Design moderno e responsivo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: Framework React para aplicações web modernas.
+- **TypeScript**: Suporte para tipagem estática.
+- **Vercel**: Hospedagem e deploy contínuo.
+- **JSON Dinâmico**: Carregamento de dados diretamente de um banco de dados local `db.json`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📦 Como Rodar o Projeto Localmente
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone o repositório:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone https://github.com/fabiobrasileiroo/agenda-tech-brasil-site.git
+   cd agenda-tech-brasil-site
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Instale as dependências:
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   # ou
+   yarn install
+   # ou
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Inicie o servidor de desenvolvimento:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   # ou
+   pnpm dev
+   ```
+
+4. Abra [http://localhost:3000](http://localhost:3000) no navegador para visualizar o projeto.
+
+---
+
+## 📤 Deploy na Vercel
+
+Este projeto está configurado para ser implantado na [Vercel](https://vercel.com), a plataforma oficial para Next.js. Para fazer o deploy:
+
+1. Crie uma conta na [Vercel](https://vercel.com).
+2. Conecte seu repositório GitHub.
+3. A Vercel detectará automaticamente o framework Next.js e configurará o deploy.
+
+Mais informações na [documentação oficial de deploy](https://nextjs.org/docs/app/building-your-application/deploying).
+
+---
+
+## 📚 Aprenda Mais Sobre Next.js
+
+- [Documentação do Next.js](https://nextjs.org/docs)
+- [Tutorial interativo do Next.js](https://nextjs.org/learn)
+- [Repositório no GitHub](https://github.com/vercel/next.js)
+
+---
+
+## 🔗 Créditos e Dados do Projeto
+
+Os dados dinâmicos exibidos no site são carregados de um arquivo `db.json` do projeto [Abacatinhos](https://github.com/abacatinhos/).
+
+---
+
+Se precisar de mais alguma modificação ou adição no README, me avise!
