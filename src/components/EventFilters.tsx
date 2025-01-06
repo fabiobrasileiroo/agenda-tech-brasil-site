@@ -16,7 +16,7 @@ export function EventFilters({
   return (
     <div className="flex justify-center mb-8">
       <Select value={selectedYear} onValueChange={onYearChange}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Selecione o ano" />
         </SelectTrigger>
         <SelectContent>
