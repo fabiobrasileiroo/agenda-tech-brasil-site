@@ -103,7 +103,7 @@ export function DrawerFilter({
             </div>
 
             {/* Filtro de Data de Início */}
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium">Data de Início</label>
               <input
                 type="date"
@@ -111,10 +111,10 @@ export function DrawerFilter({
                 onChange={(e) => setStartDate(e.target.value)}
                 className="w-full p-1 text-sm border rounded-md"
               />
-            </div>
+            </div> */}
 
             {/* Filtro de Data de Fim */}
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium">Data de Fim</label>
               <input
                 type="date"
@@ -122,10 +122,10 @@ export function DrawerFilter({
                 onChange={(e) => setEndDate(e.target.value)}
                 className="w-full p-1 text-sm border rounded-md"
               />
-            </div>
+            </div> */}
 
             {/* Filtro de Modelo */}
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium">Modelo</label>
               <select
                 value={mode}
@@ -139,10 +139,10 @@ export function DrawerFilter({
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
           </div>
           <DrawerFooter className="space-x-2">
-            <Button className="w-full text-sm">Aplicar</Button>
+            {/* <Button className="w-full text-sm">Aplicar</Button> */}
             <DrawerClose asChild>
               <Button variant="outline" className="w-full text-sm">
                 Cancelar
