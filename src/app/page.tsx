@@ -80,7 +80,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <ScreenSizeButton />
+      {/* <ScreenSizeButton /> */}
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col items-center">
           <Image
@@ -159,7 +159,8 @@ export default function Home() {
         ))}
       </div>
 
-      <footer className="bg-zinc-900 py-8 text-white">
+
+      < footer className="bg-zinc-900 py-8 text-white" >
         <div className="container mx-auto px-4">
           <div className="flex flex-col gap-8 text-center md:flex-row md:items-start md:text-left">
             <div className="flex flex-col items-center md:items-start">
@@ -170,13 +171,41 @@ export default function Home() {
                 eventos de tecnologia no Brasil!
               </p>
             </div>
-            <LinksWithIcons />
-            <div className="mt-8 text-center text-sm text-gray-400">
-              Feito com 💚 por Eventos Tech Brasil
+            <div className="flex flex-col items-center md:items-start">
+              <h3 className="text-xl font-semibold">Mais Informações</h3>
+              <p className="mt-4">
+                Criado por{' '}
+                <a
+                  href="https://github.com/pachicodes"
+                  className="text-primary underline"
+                >
+                  @pachicodes
+                </a>{' '}
+                e mantido por colaboradores como{' '}
+                <a
+                  href="https://github.com/stephan-lopes"
+                  className="text-primary underline"
+                >
+                  @stephan-lopes
+                </a>
+                . O site foi desenvolvido inicialmente por{' '}
+                <a
+                  href="https://github.com/fabiobrasileiroo"
+                  className="text-primary underline"
+                >
+                  @fabiobrasileiroo
+                </a>
+                .
+              </p>
             </div>
           </div>
+          <LinksWithIcons />
+          <div className="mt-8 text-center text-sm text-gray-400">
+            Feito com 💚 por Eventos Tech Brasil
+          </div>
         </div>
-      </footer>
+      </footer >
+
     </div>
   )
 }
