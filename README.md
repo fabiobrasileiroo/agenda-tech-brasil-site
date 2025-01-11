@@ -1,4 +1,5 @@
 # Agenda Tech Brasil
+![none-background-logo](https://github.com/user-attachments/assets/2b58ff78-a4a0-46d7-a5a9-59b5dda67b05)
 
 <!--![Agenda Tech Brasil](https://github.com/user-attachments/assets/f4dae2fe-b884-4a9f-8dfc-38ac38e57399) -->
 ![%Y-%m%d_](https://github.com/user-attachments/assets/57767b75-d582-4e3a-87f7-39471c27bb62)
