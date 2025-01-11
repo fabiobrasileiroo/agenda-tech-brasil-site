@@ -1,5 +1,5 @@
-import SparklesText from "./ui/sparkles-text";
+import SparklesText from './ui/sparkles-text'
 
 export function SparklesTextTitle() {
-  return <SparklesText text="Agenda Tech Brasil" />;
+  return <SparklesText text="Agenda Tech Brasil" />
 }

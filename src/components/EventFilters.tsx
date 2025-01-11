@@ -1,6 +1,12 @@
 'use client'
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface EventFiltersProps {
   years: string[]
@@ -14,7 +20,7 @@ export function EventFilters({
   onYearChange,
 }: EventFiltersProps) {
   return (
-    <div className="flex justify-center mb-8">
+    <div className="mb-8 flex justify-center">
       <Select value={selectedYear} onValueChange={onYearChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Selecione o ano" />
@@ -30,4 +36,3 @@ export function EventFilters({
     </div>
   )
 }
-

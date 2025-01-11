@@ -1,31 +1,31 @@
-import { Evento2 } from "@/@types/events";
+import { Evento2 } from '@/@types/events'
 
-const EventBadge = ( event: Evento2 ) => {
+const EventBadge = (event: Evento2) => {
   // FunÃ§Ã£o para determinar a cor com base no tipo de evento
-  const getBadgeColor = (tipo:string) => {
+  const getBadgeColor = (tipo: string) => {
     switch (tipo) {
-      case "prensecial":
-        return "bg-blue-600"; // Cor para 'Workshop'
-      case "hebrido":
-        return "bg-green-600"; // Cor para 'SeminÃ¡rio'
-      case "online":
-        return "bg-red-600"; // Cor para 'ConferÃªncia'
+      case 'prensecial':
+        return 'bg-blue-600' // Cor para 'Workshop'
+      case 'hebrido':
+        return 'bg-green-600' // Cor para 'SeminÃ¡rio'
+      case 'online':
+        return 'bg-red-600' // Cor para 'ConferÃªncia'
       default:
-        return "bg-background/20"; // Cor padrÃ£o
+        return 'bg-background/20' // Cor padrÃ£o
     }
-  };
+  }
 
   return (
     <div className="flex items-center space-x-2">
       <span
-        className={`text-xs font-semibold px-2 py-1 text-primary rounded-full ${getBadgeColor(
-          event.tipo
+        className={`rounded-full px-2 py-1 text-xs font-semibold text-primary ${getBadgeColor(
+          event.tipo,
         )}`}
       >
         {event.tipo}
       </span>
     </div>
-  );
-};
+  )
+}
 
-export default EventBadge;
+export default EventBadge

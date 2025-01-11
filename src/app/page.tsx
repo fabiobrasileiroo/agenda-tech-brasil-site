@@ -1,84 +1,91 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { fetchEvents } from '../utils/fetchEvents'
-import { EventCard } from '@/components/EventCard'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
 import { Evento, Evento2, Mese } from '@/@types/events'
-import LinksWithIcons from '@/components/iconsLink'
-import { SparklesTextTitle } from '@/components/TitleSparklesText'
 import { DrawerFilter } from '@/components/DrawerFilter'
+import { EventCard } from '@/components/EventCard'
+import LinksWithIcons from '@/components/iconsLink'
+import ScreenSizeButton from '@/components/ScreenSizeButton'
+import { SparklesTextTitle } from '@/components/TitleSparklesText'
+
+import { fetchEvents } from '../utils/fetchEvents'
 
 export default function Home() {
-  const [events, setEvents] = useState<Evento[]>([])
+  const [eventos, setEventos] = useState<Evento[]>([])
   const [filteredEvents, setFilteredEvents] = useState<Evento[]>([])
   const [selectedYear, setSelectedYear] = useState<string>('')
-  const [years, setYears] = useState<string[]>([])
-  const [location, setLocation] = useState<string>('')
-  const [startDate, setStartDate] = useState<string>('')
-  const [endDate, setEndDate] = useState<string>('')
-  const [mode, setMode] = useState<string>('')
+  const [anos, setAnos] = useState<string[]>([])
+  const [local, setLocal] = useState<string>('')
+  const [dataInicio, setDataInicio] = useState<string>('')
+  const [dataFim, setDataFim] = useState<string>('')
+  const [modo, setModo] = useState<string>('')
 
-  const monthRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const mesRefs = useRef<{ [chave: string]: HTMLDivElement | null }>({})
 
+  // ✅ Corrigido: Declaração de filterEvents antes de ser usado
+  const filterEvents = useCallback(
+    (eventsData: Evento[], anoSelecionado: string) => {
+      const filtrado = eventsData.filter((evento) => {
+        if (anoSelecionado && evento.ano.toString() !== anoSelecionado)
+          return false
+
+        if (
+          local &&
+          !evento.localidade?.toLowerCase().includes(local.toLowerCase())
+        )
+          return false
+
+        const dataInicioEvento = new Date(evento.dataInicio)
+        const dataFimEvento = new Date(evento.dataFim)
+        if (dataInicio && dataInicioEvento < new Date(dataInicio)) return false
+        if (dataFim && dataFimEvento > new Date(dataFim)) return false
+
+        // ✅ Verificação segura para evitar erro de undefined
+        if (modo && evento.modelo?.toLowerCase() !== modo.toLowerCase())
+          return false
+
+        return true
+      })
+
+      setFilteredEvents(filtrado)
+    },
+    [local, dataInicio, dataFim, modo],
+  )
+
+  // ✅ Corrigido: filterEvents incluído nas dependências
   useEffect(() => {
-    const loadEvents = async () => {
+    const carregarEventos = async () => {
       const eventsData = await fetchEvents()
-      setEvents(eventsData)
+      setEventos(eventsData)
 
-      const currentYear = new Date().getFullYear().toString()
-      const availableYears = [...new Set(eventsData.map((e) => e.ano.toString()))]
+      const anoAtual = new Date().getFullYear().toString()
+      const anosDisponiveis = [
+        ...new Set(eventsData.map((e) => e.ano.toString())),
+      ]
 
-      setYears(availableYears)
-      setSelectedYear(currentYear)
+      setAnos(anosDisponiveis)
+      setSelectedYear(anoAtual)
 
-      filterEvents(eventsData, currentYear)
+      filterEvents(eventsData, anoAtual)
     }
 
-    loadEvents()
-  }, [])
-
-  const filterEvents = (eventsData: Evento[], currentYear: string) => {
-    const filtered = events.filter((event) => {
-      // Filtro por ano
-      if (selectedYear && event.ano.toString() !== selectedYear) return false
-
-      // Filtro por localidade
-      if (location && !event.localidade?.toLowerCase().includes(location.toLowerCase())) return false
-
-      // Filtro por datas
-      const eventStartDate = new Date(event.dataInicio)
-      const eventEndDate = new Date(event.dataFim)
-      if (startDate && eventStartDate < new Date(startDate)) return false
-      if (endDate && eventEndDate > new Date(endDate)) return false
-
-      // Filtro por modelo
-      if (mode && event.modelo.toLowerCase() !== mode.toLowerCase()) return false
-
-      return true
-    })
-    setFilteredEvents(filtered)
-  }
+    carregarEventos()
+  }, [filterEvents]) // ✅ filterEvents incluído nas dependências
 
   useEffect(() => {
-    // filterEvents()
-    filterEvents(events, selectedYear || new Date().getFullYear().toString());
-  }, [selectedYear, location, startDate, endDate, mode, events])
-
-  const scrollToCurrentMonth = (currentMonth: string): void => {
-    const monthElement = monthRefs.current[currentMonth]
-    if (monthElement) {
-      monthElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
+    filterEvents(eventos, selectedYear)
+  }, [eventos, selectedYear, local, dataInicio, dataFim, modo, filterEvents]) // ✅ filterEvents incluído
 
   return (
     <div className="min-h-screen bg-background">
+      <ScreenSizeButton />
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col items-center mb-8">
+        <div className="mb-8 flex flex-col items-center">
           <Image
             src="/logo.png"
-            alt="Abacatinhos.dev Logo"
+            alt="Logo Abacatinhos.dev"
             width={150}
             height={150}
             className="mb-4 rounded-full"
@@ -86,56 +93,63 @@ export default function Home() {
           <SparklesTextTitle />
         </div>
 
-        {/* Filtros */}
         <DrawerFilter
-
-          // month={month}
-          years={years}
+          years={anos}
           selectedYear={selectedYear}
           onYearChange={setSelectedYear}
-          location={location}
-          setLocation={setLocation}
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}
-          mode={mode}
-          setMode={setMode}
+          location={local}
+          setLocation={setLocal}
+          startDate={dataInicio}
+          setStartDate={setDataInicio}
+          endDate={dataFim}
+          setEndDate={setDataFim}
+          mode={modo}
+          setMode={setModo}
         />
 
-        {/* Eventos Filtrados */}
         {filteredEvents.map((yearData: Evento) => (
           <div key={yearData.ano} className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-primary">
+            <h2 className="mb-4 text-3xl font-semibold text-primary">
               {yearData.ano}
             </h2>
-            {yearData.meses.map((monthData: Mese, monthIndex: number) => {
-              const monthColors = [
-                '#f43f5e', '#10b981', '#3b82f6', '#a855f7',
-                '#f59e0b', '#14b8a6', '#ef4444', '#6366f1',
-                '#ec4899', '#22c55e', '#2563eb', '#eab308',
+            {yearData.meses.map((mesData: Mese, mesIndex: number) => {
+              const mesColors = [
+                '#f43f5e',
+                '#10b981',
+                '#3b82f6',
+                '#a855f7',
+                '#f59e0b',
+                '#14b8a6',
+                '#ef4444',
+                '#6366f1',
+                '#ec4899',
+                '#22c55e',
+                '#2563eb',
+                '#eab308',
               ]
-              const monthColor = monthColors[monthIndex % monthColors.length]
+              const mesColor = mesColors[mesIndex % mesColors.length]
 
               return (
                 <div
-                  key={monthData.mes}
+                  key={mesData.mes}
                   className="mb-8"
-                  // ref={(el) => (monthRefs.current[monthData.mes.toLowerCase()] = el)}
                   ref={(el) => {
-                    monthRefs.current[monthData.mes.toLowerCase()] = el;
+                    mesRefs.current[mesData.mes.toLowerCase()] = el
                   }}
-
                 >
                   <h3
-                    className="text-xl font-semibold mb-8 capitalize"
-                    style={{ color: monthColor }}
+                    className="mb-8 text-2xl font-semibold capitalize"
+                    style={{ color: mesColor }}
                   >
-                    {monthData.mes}
+                    {mesData.mes}
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {monthData.eventos.map((event: Evento2, index: number) => (
-                      <EventCard key={`${event.nome}-${index}`} event={event} month={monthData.mes} />
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {mesData.eventos.map((evento: Evento2, index: number) => (
+                      <EventCard
+                        key={`${evento.nome}-${index}`}
+                        event={evento}
+                        month={mesData.mes}
+                      />
                     ))}
                   </div>
                 </div>
@@ -145,30 +159,21 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Footer */}
-      <footer className="bg-zinc-900 text-white py-8">
+      <footer className="bg-zinc-900 py-8 text-white">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-start text-center md:text-left gap-8">
+          <div className="flex flex-col gap-8 text-center md:flex-row md:items-start md:text-left">
             <div className="flex flex-col items-center md:items-start">
               <h2 className="text-2xl font-semibold">Eventos Tech Brasil</h2>
               <p className="mt-5">
-                Sabe aquele evento de tecnologia que você procura, mas não sabe onde encontrar? Este site reúne em um só lugar informações sobre eventos de tecnologia no Brasil!
+                Sabe aquele evento de tecnologia que você procura, mas não sabe
+                onde encontrar? Este site reúne em um só lugar informações sobre
+                eventos de tecnologia no Brasil!
               </p>
             </div>
-            <div className="flex flex-col items-center md:items-start">
-              <h3 className="text-xl font-semibold">Mais Informações</h3>
-              <p className="mt-4">
-                Criado por <a href="https://github.com/pachicodes" className="text-primary underline">@pachicodes</a> e mantido por colaboradores como <a href="https://github.com/stephan-lopes" className="text-primary underline">@stephan-lopes </a>
-                e website foi desevolvido pelo 
-                <a href="https://github.com/fabiobrasileiroo" className="text-primary underline">
-                   fabiobrasileiroo
-                </a>
-              </p>
+            <LinksWithIcons />
+            <div className="mt-8 text-center text-sm text-gray-400">
+              Feito com 💚 por Eventos Tech Brasil
             </div>
-          </div>
-          <LinksWithIcons />
-          <div className="mt-8 text-center text-sm text-gray-400">
-            Feito com 💚 por Eventos Tech Brasil
           </div>
         </div>
       </footer>

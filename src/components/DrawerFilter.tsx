@@ -1,7 +1,7 @@
-import * as React from "react"
-import { FilterIcon } from "lucide-react"
+import * as React from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Drawer,
   DrawerClose,
@@ -11,24 +11,24 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import { EventFilters } from "./EventFilters"
-import { Input } from "./ui/input"
-import { RainbowButtonFilter } from "./RaibowButtonFilter"
+} from '@/components/ui/drawer'
 
+import { EventFilters } from './EventFilters'
+import { RainbowButtonFilter } from './RaibowButtonFilter'
+import { Input } from './ui/input'
 
 interface EventFiltersProps {
-  years: string[] // Lista de anos disponíveis
-  selectedYear: string // Ano atualmente selecionado
-  onYearChange: (year: string) => void // Função para alterar o ano selecionado
-  location: string // Localidade selecionada
-  setLocation: (location: string) => void // Função para alterar a localidade
-  startDate: string // Data de início selecionada
-  setStartDate: (date: string) => void // Função para alterar a data de início
-  endDate: string // Data de fim selecionada
-  setEndDate: (date: string) => void // Função para alterar a data de fim
-  mode: string // Modelo do evento (online, híbrido, presencial)
-  setMode: (mode: string) => void // Função para alterar o modelo
+  years: string[]
+  selectedYear: string
+  onYearChange: (year: string) => void
+  location: string
+  setLocation: (location: string) => void
+  startDate: string
+  setStartDate: (date: string) => void
+  endDate: string
+  setEndDate: (date: string) => void
+  mode: string
+  setMode: (mode: string) => void
 }
 
 export function DrawerFilter({
@@ -44,16 +44,41 @@ export function DrawerFilter({
   mode,
   setMode,
 }: EventFiltersProps) {
-  const eventModes = ["Online", "Híbrido", "Presencial"];
+  const eventModes = ['Online', 'Híbrido', 'Presencial']
+  const [showButton, setShowButton] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+
+  const handleScroll = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      if (window.scrollY > lastScrollY) {
+        setShowButton(false)
+      } else {
+        setShowButton(true)
+      }
+      setLastScrollY(window.scrollY)
+    }
+  }, [lastScrollY])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll)
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [handleScroll])
 
   return (
-    <Drawer >
+    <Drawer>
       <DrawerTrigger asChild>
-        {/* <Button variant="outline" className="fixed z-10 bottom-4 right-4">
-          <FilterIcon />
-        </Button> */}
-        <div  className="fixed z-10 bottom-4 right-4">
-          <RainbowButtonFilter ></RainbowButtonFilter>
+        <div
+          className={`
+            fixed bottom-4 right-4 z-10 
+            transition-all duration-500 ease-in-out
+            ${showButton ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}
+          `}
+        >
+          <RainbowButtonFilter />
         </div>
       </DrawerTrigger>
       <DrawerContent className="max-w-xs">
@@ -64,73 +89,59 @@ export function DrawerFilter({
               Ajuste os filtros conforme necessário.
             </DrawerDescription>
           </DrawerHeader>
-          <div className="p-2 space-y-2">
-            {/* Filtro de Anos */}
+
+          <div className="space-y-2 p-2">
+            {/* Filtro de Ano */}
             <label className="block text-sm font-medium">Ano</label>
             <EventFilters
-            onYearChange={onYearChange} 
-            selectedYear={selectedYear}
-            years={years}
+              onYearChange={onYearChange}
+              selectedYear={selectedYear}
+              years={years}
             />
-            {/* <div>
-              <select
-                value={selectedYear}
-                onChange={(e) => onYearChange(e.target.value)}
-                className="w-full p-1 text-sm border rounded-md"
-              >
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div> */}
 
             {/* Filtro de Localidade */}
             <div className="space-y-2">
-              <label className="block  text-sm font-medium">Localidade</label>
-              {/* <input
+              <label className="block text-sm font-medium">Localidade</label>
+              <Input
                 type="text"
+                placeholder="Digite o local"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="Cidade ou estado"
-                className="w-full p-1 text-sm border rounded-md"
-              /> */}
-               <Input type="text" placeholder="Digite o local" value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                // placeholder="Cidade ou estado"
-                className="w-full p-1 text-sm border rounded-md" />
+                className="w-full rounded-md border p-1 text-sm"
+              />
             </div>
 
             {/* Filtro de Data de Início */}
-            {/* <div>
-              <label className="block text-sm font-medium">Data de Início</label>
-              <input
+            <div>
+              <label className="block text-sm font-medium">
+                Data de Início
+              </label>
+              <Input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full p-1 text-sm border rounded-md"
+                className="w-full rounded-md border p-1 text-sm"
               />
-            </div> */}
+            </div>
 
             {/* Filtro de Data de Fim */}
-            {/* <div>
+            <div>
               <label className="block text-sm font-medium">Data de Fim</label>
-              <input
+              <Input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full p-1 text-sm border rounded-md"
+                className="w-full rounded-md border p-1 text-sm"
               />
-            </div> */}
+            </div>
 
             {/* Filtro de Modelo */}
-            {/* <div>
+            <div>
               <label className="block text-sm font-medium">Modelo</label>
               <select
                 value={mode}
                 onChange={(e) => setMode(e.target.value)}
-                className="w-full p-1 text-sm border rounded-md"
+                className="w-full rounded-md border p-1 text-sm"
               >
                 <option value="">Todos</option>
                 {eventModes.map((modeOption) => (
@@ -139,10 +150,10 @@ export function DrawerFilter({
                   </option>
                 ))}
               </select>
-            </div> */}
+            </div>
           </div>
+
           <DrawerFooter className="space-x-2">
-            {/* <Button className="w-full text-sm">Aplicar</Button> */}
             <DrawerClose asChild>
               <Button variant="outline" className="w-full text-sm">
                 Cancelar
